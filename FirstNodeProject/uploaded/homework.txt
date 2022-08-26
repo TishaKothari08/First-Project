@@ -1,0 +1,119 @@
+if (b>=50 && b<=90)
+{
+   if(a>=40 && a<=50) 
+   {
+      console.log("Hello World")
+   }
+   else if (a<40) 
+   {  
+      console.log("Bye Not") 
+   }
+}
+---------------------------
+26/4/22
+var string = "";
+for (var i = 1; i <= 5; i++) {
+  for (var j =1; j <= i; j++) {
+    string += "*";
+  }
+  console.log(string + "\n");
+}
+
+-----------------------------
+var num = "";
+for (var x = 1; x <= 5; x++) {
+  for (var y = 1; y<=x; y++) {
+    num += "y";
+  }
+  console.log(num +"\n");
+}
+
+----------------------------------
+27/4/22
+function factorial(n)
+    {
+        var fact = 1;
+
+        for( var i=n; i>=1; i--)
+            {
+                fact = fact * i;
+            }
+        return fact;
+    }
+var n = 5;
+fact = factorial(n);
+console.log(fact);
+
+---------------------------------------------
+var n = 6
+for(var i=1; i<=n; i++)
+{
+   for(var j=1; j<=n-i; j++)
+   {
+       document.write(j);
+   }
+   document.write("<br>");
+}
+##
+12345
+1234
+123
+12
+1
+
+------------------------------------------------
+var n = 5;
+var string = "";
+for (let i = 1; i <= n; i++) {
+  for (let j = 1; j <= n - i; j++) {
+    string += " ";
+  }
+  for (let k = 1; k <= 2 * i - 1; k++) {
+    string += k;
+  }
+  string += "\n";
+}
+console.log(string);
+
+------------------------------------------------
+
+28/4/22
+//clouser
+function outer()
+    {
+        var x =10;
+        var y =10;
+        var z = 10;
+        function inner()
+            {
+                console.log(x*y*z);
+            }
+        return inner;
+    }
+const print = outer();
+print();
+
+// currying
+function a(x)
+    {
+        return function (b)
+            { 
+                return function (c)
+                    {
+                        console.log(x*b*c);
+                    }
+            }
+    }
+a(1)(2)(3);
+----------------------------------------------
+function add(...rest)
+    {
+        var sum =0;
+        for(var i=0; i<rest.length; i++)
+            {
+                sum += rest[i];
+            }
+        console.log(sum);
+    }
+add(1,2,3,4);
+----------------------------------------------
