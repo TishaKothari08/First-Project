@@ -34,18 +34,20 @@ const upload = multer({ storage : storage}).any();
 
 const logger = (req, res, next) => {
     console.log('My Logger');
+    req["owner"] = 'Tisha';
+    req.body = {
+        ...req.body,
+        owner : "Tisha"
+    }
     next();
 }
 
-const loggerNew = (req, res, next) => {
-    console.log('My Post Logger');
-    next();
-}
 
-app.use(logger);
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
+
+app.use(logger);
 
 app.use('/static',express.static('public'));
 
@@ -83,16 +85,16 @@ app.get('/api/students',(req,res) => {
     res.send('Hello World!! get');
 })
 
-app.post('/api/students', loggerNew, (req,res) => {
-    console.log(req.body);
+app.post('/api/students', (req,res) => {
+    console.log(req.body, req.owner);
     res.send('Created Post request');
 })
 
-app.put('/',(req,res) => {
+app.put('/api/students',(req,res) => {
     res.send('Hello World!! put');
 })
 
-app.delete('/',(req,res) => {
+app.delete('/api/students',(req,res) => {
     res.send('Hello World!! delete');
 })
 
