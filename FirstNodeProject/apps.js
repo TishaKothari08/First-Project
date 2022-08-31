@@ -36,8 +36,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage : storage}).any();
 
 apps.use('/static',express.static('public'));
-
-apps.post('/upload',upload, (req,res) => {
+apps.post('/upload', (req,res) => {
     upload(req, res, (err) => {
 
         if(err){
@@ -71,10 +70,12 @@ const todoList = [];
 apps.post('/task',(req,res) => {
 
     const {name, desrciption } = req.body;
-
+    const id = Math.floor(Math.random() * 10000);
+    console.log(id);
     const newTask = {
         name,
         desrciption, 
+        id
     };
 
     todoList.push(newTask);
@@ -82,9 +83,59 @@ apps.post('/task',(req,res) => {
     res.status(200).send({
         status : true,
         message : "Task Created Succesfully",
-        todoList : todoList
     });
 });
+
+//API for getting the tasks
+apps.get('/task',(req,res) => {
+
+    res.status(200).send({
+        status : true,
+        message : "Task Fetched Succesfully",
+        data : todoList
+    });
+})
+
+
+//API for getting all the task by id
+apps.get('/task/:id',(req,res) => {
+
+    console.log(req.params);
+    const { id } = req.params;
+    //const result = todoList.find(obj => obj.id == id);
+    var result = {};
+    for(var i=0; i<todoList.length; i++){
+        if(id == todoList[i].id){
+            result = todoList[i];
+        }
+    }
+
+    res.status(200).send({
+        status : true,
+        message : "Task Fetched Succesfully",
+        data : result
+    });
+})
+
+//API to update the particular to task
+
+apps.put('/task/:id', (req,res) => {
+    const { id } = req.params;
+    const { body } = req;
+    
+    for(var i=0; i<todoList.length; i++){
+        if(todoList[i] == id){
+            todoList[i] = {...todoList[i], ...body};
+            break;
+        }
+    }
+    res.status(200).send({
+        status : true,
+        message : "Task updated Succesfully",
+        data : todoList[i]
+    });
+});
+
 
 
 
