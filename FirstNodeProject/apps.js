@@ -1,8 +1,11 @@
 const express = require('express');
 const multer = require('multer');
 
-const app = express();
+const apps = express();
 const port = 9000;
+
+apps.use(express.json());
+apps.use(express.urlencoded({extended : true}));
 
 const storage = multer.diskStorage({
     destination : (req, file, callbackFunc) => {
@@ -32,28 +35,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage : storage}).any();
 
-const logger = (req, res, next) => {
-    console.log('My Logger');
-    req["owner"] = 'Tisha';
-    req.body = {
-        ...req.body,
-        owner : "Tisha"
-    }
-    next();
-}
+apps.use('/static',express.static('public'));
 
-app.use(express.json());
-app.use(express.urlencoded({extended : true}));
-
-app.use(logger);
-
-app.use('/static',express.static('public'));
-
-app.get('/index.html',(req,res) => {
-    res.sendFile(__dirname + '/public/html/index.html');
-})
-
-app.post('/upload',upload, (req,res) => {
+apps.post('/upload',upload, (req,res) => {
     upload(req, res, (err) => {
 
         if(err){
@@ -78,24 +62,32 @@ app.post('/upload',upload, (req,res) => {
     });
 })
 
-app.get('/api/students',(req,res) => {
-    console.log(req.body);
-    res.send('Hello World!! get');
-})
+//TODO APIs
 
-app.post('/api/students', (req,res) => {
-    console.log(req.body, req.owner);
-    res.send('Created Post request');
-})
+const todoList = [];
 
-app.put('/api/students',(req,res) => {
-    res.send('Hello World!! put');
-})
+//API to create the new task
 
-app.delete('/api/students',(req,res) => {
-    res.send('Hello World!! delete');
-})
+apps.post('/task',(req,res) => {
 
-app.listen(port, () =>{
+    const {name, desrciption } = req.body;
+
+    const newTask = {
+        name,
+        desrciption, 
+    };
+
+    todoList.push(newTask);
+    
+    res.status(200).send({
+        status : true,
+        message : "Task Created Succesfully",
+        todoList : todoList
+    });
+});
+
+
+
+apps.listen(port, () =>{
     console.log(`Server Started at port ${port}`);
 })

@@ -1,0 +1,85 @@
+25/08/22
+
+Points to remember in Disccussion.
+1. Always be data driven ( Data points )
+2. Do your homework.
+3. Start with briefing about the agenda 
+4. Start talking about the problem statement
+5. List down the action items 
+6. Finalise the ETAs
+
+
+
+Todo Project ( Managing the tasks )
+
+1. /task/ -> GET  -> get all the tasks created.
+  req body = {} // nothing required
+  
+  res body = { 
+    data: [
+      {name: '', description: '', id: ''}, 
+      {name: '', description: '', id: ''}
+      ]
+    }
+
+2. /task/ -> POST  -> create a new task.
+
+  req body = {
+    description: "",
+    name: "",
+  } 
+  
+  res body = { 
+    status: true,
+    message: "Task created successfully",
+    data: {
+      id: 131
+    }
+   }
+
+3. /task/:id -> PUT -> update the task
+
+  req body = {
+    description: "",
+    name: "",
+  } 
+  
+  res body = { 
+    status: true,
+    message: "Task updating successfully",
+    data: {
+      id: 131
+    }
+  }
+
+4. /task/:id -> GET -> get the individual task  by id
+
+  res body = {
+    status: true,
+    data: {
+      id: 1231,
+      name: '',
+      description: '',
+    }
+  }
+
+5. /task/:id -> DELETE -> delete the individual task  by id
+
+res body = { 
+    status: true,
+    message: "Task deleted successfully",
+    data: {
+      id: 131,
+      name: "",
+      description: '',
+    }
+   }
+
+
+const tasks = [
+  {
+    name:'',
+    description: '',
+    id: ''
+  }
+];
